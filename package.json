@@ -5,6 +5,7 @@
   "types": "src/index.d.ts",
   "description": "React Native Calendar Components",
   "scripts": {
+    "postinstall": "npm run build:ts",
     "build": "xcodebuild -project ios/CalendarsExample.xcodeproj build",
     "build:ts": "tsc",
     "build:dev": "tsc --noEmit",
