@@ -6,7 +6,8 @@ export default function styleConstructor(theme: Theme = {}) {
   const appStyle = {...defaultStyle, ...theme};
   return StyleSheet.create({
     container: {
-      flexDirection: 'row'
+      flexDirection: 'row',
+      flex: 1
     },
     innerContainer: {
       flex: 1
@@ -26,16 +27,23 @@ export default function styleConstructor(theme: Theme = {}) {
       marginTop: -5
     },
     day: {
-      width: 63,
+      width: 70,
       alignItems: 'center',
-      justifyContent: 'flex-start',
-      marginTop: 32
+      justifyContent: 'center',
+      paddingTop: 10,
+      paddingBottom: 10,
+      borderTopWidth: 1,
+      borderRightWidth: 1,
+      borderTopRightRadius: 10, // Rounded corner on top right
+      borderBottomRightRadius: 10, // Rounded corner on bottom right
+      borderColor: '#CCCCCC' // Border color
     },
     today: {
       color: appStyle.agendaTodayColor
     },
     indicator: {
-      marginTop: 80
+      marginTop: 20,
+      marginBottom: 20
     },
     ...(theme['stylesheet.agenda.list'] || {})
   });

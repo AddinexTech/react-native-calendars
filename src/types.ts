@@ -4,7 +4,7 @@ import {CalendarContextProps} from './expandableCalendar/Context';
 
 export type ContextProp = {
   context?: CalendarContextProps;
-}
+};
 export type MarkingTypes = 'dot' | 'multi-dot' | 'period' | 'multi-period' | 'custom';
 export type MarkedDates = {
   [key: string]: MarkingProps;
@@ -76,11 +76,11 @@ export interface Theme {
   weekVerticalMargin?: number;
   stylesheet?: {
     calendar?: {
-      main?: object; 
+      main?: object;
       header?: object;
     };
     day?: {
-      basic?: object; 
+      basic?: object;
       period?: object;
     };
     dot?: object;
@@ -89,7 +89,7 @@ export interface Theme {
       main?: object;
     };
     agenda?: {
-      main?: object; 
+      main?: object;
       list?: object;
     };
     expandable?: {
@@ -98,15 +98,29 @@ export interface Theme {
   };
 }
 
+enum TimeLineStatus {
+  NEW = 'NEW',
+  OLD = 'OLD'
+}
+
+interface IDiaryEntry {
+  pillsConsumed?: number;
+  diaryEntryDate: string;
+  diaryEntryTime: string;
+  diaryEntryId: string;
+  timeLineStatus: TimeLineStatus;
+}
+
 export type AgendaEntry = {
   name: string;
   height: number;
   day: string;
-}
+  diaryEntries?: IDiaryEntry[];
+};
 
 export type AgendaSchedule = {
   [date: string]: AgendaEntry[];
-}
+};
 
 export interface DayAgenda {
   reservation?: AgendaEntry;

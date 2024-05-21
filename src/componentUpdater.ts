@@ -36,15 +36,7 @@ export function extractComponentProps(component: any, props: any, ignoreProps?: 
 }
 
 export function extractDotProps(props: MarkingProps) {
-  const {
-    theme,
-    color,
-    marked,
-    selected,
-    disabled,
-    inactive,
-    today
-  } = props;
+  const {theme, color, marked, selected, disabled, inactive, today} = props;
 
   const dotProps = {
     theme,
@@ -171,7 +163,6 @@ export function extractCalendarProps(props: CalendarListProps) {
 }
 
 export function extractCalendarListProps(props: AgendaProps) {
-
   const {
     // Agenda props
     loadItemsForMonth,
@@ -213,6 +204,11 @@ export function extractReservationListProps(props: AgendaProps) {
   const {
     // ReservationList props
     items,
+    extraData,
+    isLoading,
+    onEndReached,
+    onEndReachedThreshold,
+    keyExtractor,
     selectedDay,
     topDay,
     onDayChange,
@@ -228,47 +224,6 @@ export function extractReservationListProps(props: AgendaProps) {
     onRefresh,
     reservationsKeyExtractor,
     // Reservation props
-    date,
-    item,
-    theme,
-    rowHasChanged,
-    renderDay,
-    renderItem,
-    renderEmptyDate,
-  } = props;
-
-  const ReservationListProps = {
-    // ReservationList props
-    items,
-    selectedDay,
-    topDay,
-    onDayChange,
-    showOnlySelectedDayItems,
-    renderEmptyData,
-    onScroll,
-    onScrollBeginDrag,
-    onScrollEndDrag,
-    onMomentumScrollBegin,
-    onMomentumScrollEnd,
-    refreshControl,
-    refreshing,
-    onRefresh,
-    reservationsKeyExtractor,
-    // Reservation props
-    date,
-    item,
-    theme,
-    rowHasChanged,
-    renderDay,
-    renderItem,
-    renderEmptyDate,
-  };
-
-  return ReservationListProps;
-}
-
-export function extractReservationProps(props: ReservationListProps) {
-  const {
     date,
     item,
     theme,
@@ -277,6 +232,44 @@ export function extractReservationProps(props: ReservationListProps) {
     renderItem,
     renderEmptyDate
   } = props;
+
+  const ReservationListProps = {
+    // ReservationList props
+    items,
+    extraData,
+    isLoading,
+    onEndReached,
+    onEndReachedThreshold,
+    keyExtractor,
+    selectedDay,
+    topDay,
+    onDayChange,
+    showOnlySelectedDayItems,
+    renderEmptyData,
+    onScroll,
+    onScrollBeginDrag,
+    onScrollEndDrag,
+    onMomentumScrollBegin,
+    onMomentumScrollEnd,
+    refreshControl,
+    refreshing,
+    onRefresh,
+    reservationsKeyExtractor,
+    // Reservation props
+    date,
+    item,
+    theme,
+    rowHasChanged,
+    renderDay,
+    renderItem,
+    renderEmptyDate
+  };
+
+  return ReservationListProps;
+}
+
+export function extractReservationProps(props: ReservationListProps) {
+  const {date, item, theme, rowHasChanged, renderDay, renderItem, renderEmptyDate} = props;
 
   const reservationProps = {
     date,

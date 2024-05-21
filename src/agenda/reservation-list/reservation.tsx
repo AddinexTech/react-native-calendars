@@ -11,7 +11,6 @@ import {RESERVATION_DATE} from '../../testIDs';
 import styleConstructor from './style';
 import {Theme, AgendaEntry} from '../../types';
 
-
 export interface ReservationProps {
   date?: XDate;
   item?: AgendaEntry;
@@ -53,7 +52,7 @@ class Reservation extends Component<ReservationProps> {
     const d2 = nextProps.date;
     const r1 = this.props.item;
     const r2 = nextProps.item;
-    
+
     let changed = true;
     if (!d1 && !d2) {
       changed = false;
@@ -84,8 +83,17 @@ class Reservation extends Component<ReservationProps> {
     const dayNames = getDefaultLocale().dayNamesShort;
 
     if (date) {
+      const xDate = date instanceof XDate ? date : new XDate(date);
+      const formattedDate = xDate.toString('MMM dd ddd'); // 'May 24 Tue'
+      const dateParts = formattedDate.split(' '); // Split to style parts individually if needed
+
+      // const todayStyle = isToday(xDate) ? this.style.today : undefined;
+
       return (
         <View style={this.style.day} testID={RESERVATION_DATE}>
+          <Text allowFontScaling={false} style={[this.style.dayNum, today]}>
+            {dateParts[0]}
+          </Text>
           <Text allowFontScaling={false} style={[this.style.dayNum, today]}>
             {date.getDate()}
           </Text>
@@ -95,12 +103,12 @@ class Reservation extends Component<ReservationProps> {
         </View>
       );
     }
-    return <View style={this.style.day}/>;
+    return <View style={this.style.day} />;
   }
 
   render() {
     const {item, date, renderItem, renderEmptyDate} = this.props;
-    
+
     let content;
     if (item) {
       const firstItem = date ? true : false;
