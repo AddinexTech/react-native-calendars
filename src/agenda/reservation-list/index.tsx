@@ -62,6 +62,7 @@ export type ReservationListProps = ReservationProps & {
   onEndReachedThreshold?: number;
   /** Used to compare whether the previous data is different from the new data */
   extraData?: any;
+  isLoading?: boolean;
 };
 
 interface State {
