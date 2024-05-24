@@ -6,7 +6,8 @@ export default function styleConstructor(theme: Theme = {}) {
   const appStyle = {...defaultStyle, ...theme};
   return StyleSheet.create({
     container: {
-      flex: 1
+      flex: 1,
+      flexDirection: 'row'
     },
     innerContainer: {
       flex: 1
