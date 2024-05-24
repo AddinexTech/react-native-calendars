@@ -38,6 +38,7 @@
     "lodash": "^4.17.15",
     "memoize-one": "^5.2.1",
     "prop-types": "^15.5.10",
+    "react-native-svg": "^15.3.0",
     "react-native-swipe-gestures": "^1.0.5",
     "recyclerlistview": "^4.0.0",
     "xdate": "^0.8.0"
@@ -54,8 +55,8 @@
     "@types/jest": "^29.2.1",
     "@types/lodash": "^4.14.170",
     "@types/react": "^18.0.24",
-    "@types/react-test-renderer": "^18.0.0",
     "@types/react-native": "^0.64.19",
+    "@types/react-test-renderer": "^18.0.0",
     "@types/xdate": "^0.8.32",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
