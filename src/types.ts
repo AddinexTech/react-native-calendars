@@ -115,6 +115,9 @@ export type AgendaEntry = {
   name: string;
   height: number;
   day: string;
+  marked?: boolean;
+  checkInId?: string;
+  checkInDate?: string;
   diaryEntries?: IDiaryEntry[];
 };
 

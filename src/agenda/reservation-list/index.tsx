@@ -30,7 +30,7 @@ export type ReservationListProps = ReservationProps & {
   considered that the date in question is not yet loaded */
   items?: AgendaSchedule;
   selectedDay?: XDate;
-  topDay?: XDate;
+  topDay?: string;
   /** Show items only for the selected date. Default = false */
   showOnlySelectedDayItems?: boolean;
   /** callback that gets called when day changes while scrolling agenda list */
@@ -58,13 +58,16 @@ export type ReservationListProps = ReservationProps & {
   /** Extractor for underlying FlatList. Ensure that this is unique per item, or else scrolling may have duplicated and / or missing items.  */
   reservationsKeyExtractor?: (item: DayAgenda, index: number) => string;
   /** Called once when the scroll position gets within onEndReachedThreshold of the rendered content */
-  keyExtractor?: string;
+  keyExtractor?: (item: AgendaEntry, index: number) => string;
   onEndReached?: () => void;
   /** How far from the end (in units of visible length of the list) the bottom edge of the list must be from the end of the content to trigger the onEndReached callback */
   onEndReachedThreshold?: number;
   /** Used to compare whether the previous data is different from the new data */
   extraData?: any;
   isLoading?: boolean;
+  onScrollToIndexFailed?:
+    | ((info: {index: number; highestMeasuredFrameIndex: number; averageItemLength: number}) => void)
+    | undefined;
 };
 
 interface State {
@@ -80,7 +83,7 @@ class ReservationList extends Component<ReservationListProps, State> {
     ...Reservation.propTypes,
     items: PropTypes.object,
     selectedDay: PropTypes.instanceOf(XDate),
-    topDay: PropTypes.instanceOf(XDate),
+    topDay: PropTypes.string,
     onDayChange: PropTypes.func,
 
     showOnlySelectedDayItems: PropTypes.bool,
@@ -96,7 +99,8 @@ class ReservationList extends Component<ReservationListProps, State> {
     onRefresh: PropTypes.func,
     reservationsKeyExtractor: PropTypes.string,
     onEndReached: PropTypes.func,
-    onEndReachedThreshold: PropTypes.number
+    onEndReachedThreshold: PropTypes.number,
+    onScrollToIndexFailed: PropTypes.func
   };
 
   static defaultProps = {
@@ -127,19 +131,8 @@ class ReservationList extends Component<ReservationListProps, State> {
   }
 
   componentDidMount() {
-    //this.updateDataSource(this.getReservations(this.props).reservations);
     this.updateReservationsFromTopDay(this.props.topDay);
   }
-
-  // componentDidUpdate(prevProps: ReservationListProps) {
-  //   if (this.props.topDay && prevProps.topDay && prevProps !== this.props) {
-  //     if (!sameDate(prevProps.topDay, this.props.topDay)) {
-  //       this.setState({reservations: []}, () => this.updateReservations(this.props));
-  //     } else {
-  //       this.updateReservations(this.props);
-  //     }
-  //   }
-  // }
 
   componentDidUpdate(prevProps) {
     //todo: check here any type
@@ -152,31 +145,9 @@ class ReservationList extends Component<ReservationListProps, State> {
     }
     // Check if extraData has changed
     if (prevProps.extraData !== this.props.extraData) {
-      //  console.log('extraData changed:', this.props.extraData);
       this.updateReservationsFromTopDay(this.props.topDay);
     }
   }
-
-  // updateDataSource(reservations: DayAgenda[]) {
-  //   this.setState({reservations});
-  // }
-
-  // updateReservations(props: ReservationListProps) {
-  //   const {selectedDay, showOnlySelectedDayItems} = props;
-  //   const reservations = this.getReservations(props);
-
-  //   if (!showOnlySelectedDayItems && this.list && !sameDate(selectedDay, this.selectedDay)) {
-  //     let scrollPosition = 0;
-  //     for (let i = 0; i < reservations.scrollPosition; i++) {
-  //       scrollPosition += this.heights[i] || 0;
-  //     }
-  //     this.scrollOver = false;
-  //     this.list?.current?.scrollToOffset({offset: scrollPosition, animated: true});
-  //   }
-
-  //   this.selectedDay = selectedDay;
-  //   this.updateDataSource(reservations.reservations);
-  // }
 
   updateReservationsFromTopDay(topDay) {
     const {reservations} = this.getReservationsFromDay(topDay, this.props);
@@ -352,7 +323,8 @@ class ReservationList extends Component<ReservationListProps, State> {
 
   render() {
     // const {items, selectedDay, theme, style} = this.props;
-    const {items, selectedDay, theme, style, extraData, onEndReached, onEndReachedThreshold} = this.props;
+    const {items, selectedDay, theme, style, extraData, onEndReached, onEndReachedThreshold, onScrollToIndexFailed} =
+      this.props;
     if (!this.state.reservations.length || !items || (selectedDay && !items[toMarkingFormat(selectedDay)])) {
       if (isFunction(this.props.renderEmptyData)) {
         return this.props.renderEmptyData?.();
@@ -384,6 +356,7 @@ class ReservationList extends Component<ReservationListProps, State> {
           onScrollEndDrag={this.props.onScrollEndDrag}
           onMomentumScrollBegin={this.props.onMomentumScrollBegin}
           onMomentumScrollEnd={this.props.onMomentumScrollEnd}
+          onScrollToIndexFailed={onScrollToIndexFailed}
           ListFooterComponent={() => {
             return this.props.isLoading ? (
               <ActivityIndicator style={this.style.indicator} color={theme?.indicatorColor} />

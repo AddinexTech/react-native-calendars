@@ -87,8 +87,6 @@ class Reservation extends Component<ReservationProps> {
       const formattedDate = xDate.toString('MMM dd ddd'); // 'May 24 Tue'
       const dateParts = formattedDate.split(' '); // Split to style parts individually if needed
 
-      // const todayStyle = isToday(xDate) ? this.style.today : undefined;
-
       return (
         <View style={this.style.day} testID={RESERVATION_DATE}>
           <Text allowFontScaling={false} style={[this.style.dayNum, today]}>

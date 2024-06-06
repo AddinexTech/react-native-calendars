@@ -343,7 +343,7 @@ export default class Agenda extends Component<AgendaProps, State> {
       return this.props.renderList({
         ...reservationListProps,
         selectedDay: this.state.selectedDay,
-        topDay: this.state.topDay,
+        // topDay: this.state.topDay,
         onDayChange: this.onDayChange
       });
     }
