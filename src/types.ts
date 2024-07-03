@@ -119,6 +119,7 @@ export type AgendaEntry = {
   checkInId?: string;
   checkInDate?: string;
   diaryEntries?: IDiaryEntry[];
+  notificationsDataForDay?: any;
 };
 
 export type AgendaSchedule = {
