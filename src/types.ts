@@ -111,15 +111,53 @@ interface IDiaryEntry {
   timeLineStatus: TimeLineStatus;
 }
 
+enum DoseRequestResult {
+  ALLOWED = 'ALLOWED',
+  DENIED = 'DENIED',
+  OPT_OUT = 'OPT_OUT',
+  EXCEEDED = 'EXCEEDED',
+  EXPIRED = 'EXPIRED'
+}
+
+enum EmergencyStatus {
+  NORMAL = 'NORMAL',
+  EMERGENCY = 'EMERGENCY',
+  EMERGENCY_CANCEL = 'EMERGENCY_CANCEL'
+}
+
+interface IDoseRequest {
+  doseRequestId: string;
+  emergencyStatus: EmergencyStatus;
+  requestResult: DoseRequestResult;
+  date: string;
+  doseRequestTime: string;
+  prescriptionDoseNumber: number;
+}
+interface CombinedCalendarEntry {
+  date: string;
+  marked: boolean;
+  notifications: {
+    readCount: number;
+    unreadCount: number;
+    deliveries: any;
+    readDeliveries: any;
+    unreadDeliveries: any;
+  };
+  diaryEntries: IDiaryEntry[];
+  doseRequests: IDoseRequest[];
+}
+
 export type AgendaEntry = {
   name: string;
   height: number;
   day: string;
+  index?: number;
   marked?: boolean;
   checkInId?: string;
   checkInDate?: string;
   diaryEntries?: IDiaryEntry[];
   notificationsDataForDay?: any;
+  combinedEntry?: CombinedCalendarEntry;
 };
 
 export type AgendaSchedule = {
