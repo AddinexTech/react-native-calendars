@@ -148,9 +148,9 @@ interface CombinedCalendarEntry {
 }
 
 export type AgendaEntry = {
-  name: string;
   height: number;
   day: string;
+  name?: string;
   index?: number;
   marked?: boolean;
   checkInId?: string;
