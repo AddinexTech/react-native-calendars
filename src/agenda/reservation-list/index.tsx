@@ -68,6 +68,8 @@ export type ReservationListProps = ReservationProps & {
   onScrollToIndexFailed?:
     | ((info: {index: number; highestMeasuredFrameIndex: number; averageItemLength: number}) => void)
     | undefined;
+  onViewableItemsChanged?: (info: {viewableItems: any[]; changed: any[]}) => void;
+  viewabilityConfig?: any;
 };
 
 interface State {
@@ -85,10 +87,8 @@ class ReservationList extends Component<ReservationListProps, State> {
     selectedDay: PropTypes.instanceOf(XDate),
     topDay: PropTypes.string,
     onDayChange: PropTypes.func,
-
     showOnlySelectedDayItems: PropTypes.bool,
     renderEmptyData: PropTypes.func,
-
     onScroll: PropTypes.func,
     onScrollBeginDrag: PropTypes.func,
     onScrollEndDrag: PropTypes.func,
@@ -100,7 +100,9 @@ class ReservationList extends Component<ReservationListProps, State> {
     reservationsKeyExtractor: PropTypes.string,
     onEndReached: PropTypes.func,
     onEndReachedThreshold: PropTypes.number,
-    onScrollToIndexFailed: PropTypes.func
+    onScrollToIndexFailed: PropTypes.func,
+    onViewableItemsChanged: PropTypes.func,
+    viewabilityConfig: PropTypes.object
   };
 
   static defaultProps = {
@@ -357,6 +359,8 @@ class ReservationList extends Component<ReservationListProps, State> {
           onMomentumScrollBegin={this.props.onMomentumScrollBegin}
           onMomentumScrollEnd={this.props.onMomentumScrollEnd}
           onScrollToIndexFailed={onScrollToIndexFailed}
+          onViewableItemsChanged={this.props.onViewableItemsChanged}
+          viewabilityConfig={this.props.viewabilityConfig}
           ListFooterComponent={() => {
             return this.props.isLoading ? (
               <ActivityIndicator style={this.style.indicator} color={theme?.indicatorColor} />

@@ -150,7 +150,7 @@ interface CombinedCalendarEntry {
 export type AgendaEntry = {
   height: number;
   day: string;
-  name?: string;
+  name: string;
   index?: number;
   marked?: boolean;
   checkInId?: string;
