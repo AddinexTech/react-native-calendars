@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["jest"],
+    "types": [],
     "target": "ESNext",
     "module": "ESNext",
     // "outDir": "dist",
@@ -33,5 +33,5 @@
     "example/src/screens/calendarListScreen.tsx",
     "example/src/screens/newCalendarListScreen.tsx"
   ],
-  "exclude": ["node_modules", "testUtils"]
+  "exclude": ["node_modules", "testUtils", "**/__test__/**", "**/*.spec.ts", "**/*.spec.tsx"]
 }
